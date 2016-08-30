@@ -1,4 +1,5 @@
 var map;
+var
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 32.7767, lng: -96.7970},
@@ -6,13 +7,14 @@ function initMap(){
   });
 
   var utd = {lat: 32.984813, lng: -96.749689};
+
   var maker = new google.maps.Marker({
     position: utd,
     map:map,
     title: 'UT Dallas'
   });
 
-  var markers = [
+  var locations = [
     {
       title: "Lockhart Smokehouse",
       lat: 33.019405,
@@ -40,30 +42,47 @@ function initMap(){
     },
     {
       title: "HOUNDSTOOTH COFFEE",
-      lat:
-      lng:
+      lat: 32.811740,
+      lng: -96.774498
     },
     {
-      title: "GLOBAL PEACE FACTORY",
-      lat:
-      lng:
+      title: "Urban COFFEE",
+      lat: 32.780040,
+      lng: -96.803787
     },
     {
-      title: "COFFEE HOUSE CAFE",
-      lat:
-      lng:
+      title: "Weekend Coffee",
+      lat: 32.780326,
+      lng: -96.798355
     },
     {
-      title: "CULTIVAR",
-      lat:
-      lng:
+      title: "Stupid Good",
+      lat: 32.782541,
+      lng: -96.795324
     },
     {
       title: "ASCENSION COFFEE",
       lat: 32.793629,
       lng: -96.803780
-    }
-
+    };
   ];
+
+  var bounds = new google.maps.LatLngBounds();
+
+  for (var i = 0; i < locations.length; i++){
+    var position: new google.maps.LatLng(locations[i].lat, locations[i].lng);
+    var title = locations[i].title;
+    // create a maker per location and put into makers array
+    var maker = new google.maps.Maker({
+      position: position,
+      map: map,
+      title: title,
+      animation: google.maps.Animation.DROP,
+      id: i
+    });
+
+  }
+
+
 
 }
