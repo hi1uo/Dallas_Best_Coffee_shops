@@ -1,17 +1,9 @@
 var map;
-var
+var markers = [];
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 32.7767, lng: -96.7970},
     zoom: 13
-  });
-
-  var utd = {lat: 32.984813, lng: -96.749689};
-
-  var maker = new google.maps.Marker({
-    position: utd,
-    map:map,
-    title: 'UT Dallas'
   });
 
   var locations = [
@@ -64,25 +56,26 @@ function initMap(){
       title: "ASCENSION COFFEE",
       lat: 32.793629,
       lng: -96.803780
-    };
+    }
   ];
 
   var bounds = new google.maps.LatLngBounds();
 
   for (var i = 0; i < locations.length; i++){
-    var position: new google.maps.LatLng(locations[i].lat, locations[i].lng);
+    var position = new google.maps.LatLng(locations[i].lat, locations[i].lng);
+    console.log(position);
     var title = locations[i].title;
     // create a maker per location and put into makers array
-    var maker = new google.maps.Maker({
+    var marker = new google.maps.Marker({
       position: position,
       map: map,
       title: title,
       animation: google.maps.Animation.DROP,
       id: i
     });
-
+    // Puash the marker to makers array
+    markers.push(marker);
+    bounds.extend(markers[i].position);
   }
-
-
-
+  map.fitBounds(bounds)
 }
