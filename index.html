@@ -4,10 +4,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Neighborhood Map</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <div id="map">Hello Please load the map</div>
+    <div class="container">
+      <!-- List Area -->
+      <div class="col-lg-3 text-container option-box">
+        <h1>COFFEE and BBQ</h1>
+        <input type="button" id="show-listings" value="Show Listings">
+        <input type="button" id="hide-listings" value="Hide Listings">
+      </div>
+
+      <!-- Map -->
+      <div id="map" class="col-lg-9">Hello Please load the map</div>
+    </div>
 
     <script type='text/javascript' src='js/framework/knockout-3.4.0.js'></script>
     <script async defer

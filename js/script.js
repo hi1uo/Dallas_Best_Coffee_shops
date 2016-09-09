@@ -81,7 +81,7 @@ function initMap(){
     });
     bounds.extend(markers[i].position);
   }
-  map.fitBounds(bounds)
+  map.fitBounds(bounds);
 }
 
 function populateInfoWindow(marker, infowindow){
