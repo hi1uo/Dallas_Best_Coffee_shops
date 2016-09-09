@@ -9,8 +9,8 @@ function initMap(){
   var locations = [
     {
       title: "Lockhart Smokehouse",
-      lat: 33.019405,
-      lng: -96.699501
+      lat: 32.749608,
+      lng: -96.828537
     },
     {
       title: "Pecan Lodge",
@@ -59,11 +59,12 @@ function initMap(){
     }
   ];
 
+  var largeInfowindow = new google.maps.InfoWindow();
   var bounds = new google.maps.LatLngBounds();
 
   for (var i = 0; i < locations.length; i++){
     var position = new google.maps.LatLng(locations[i].lat, locations[i].lng);
-    console.log(position);
+    // console.log(position);
     var title = locations[i].title;
     // create a maker per location and put into makers array
     var marker = new google.maps.Marker({
@@ -75,7 +76,21 @@ function initMap(){
     });
     // Puash the marker to makers array
     markers.push(marker);
+    marker.addListener('click',function(){
+      populateInfoWindow(this,largeInfowindow);
+    });
     bounds.extend(markers[i].position);
   }
   map.fitBounds(bounds)
+}
+
+function populateInfoWindow(marker, infowindow){
+  if (infowindow.marker != marker){
+    infowindow.marker = marker;
+    infowindow.setContent('<div>'+marker.title+'</div>');
+    infowindow.open(map,marker);
+    infowindow.addListener('closeclick',function(){
+      infowindow.setMarker(null);
+    });
+  }
 }
