@@ -1,3 +1,11 @@
+var bodyEl = $('body'),
+    navTogleBtn = bodyEl.find('.nav-toggle-btn');
+
+navTogleBtn.on('click',function(e){
+  bodyEl.toggleClass('active-nav');
+});
+
+
 var map;
 var markers = [];
 function initMap(){

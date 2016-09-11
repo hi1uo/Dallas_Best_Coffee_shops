@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
   </head>
+
   <body>
-    <div class="container">
-      <!-- List Area -->
-      <div class="col-lg-3 text-container option-box">
-        <h1>COFFEE and BBQ</h1>
-        <input type="button" id="show-listings" value="Show Listings">
-        <input type="button" id="hide-listings" value="Hide Listings">
-      </div>
+    <!-- List Area -->
+    <nav id="sideMenu">
+      <a href="#" class="nav-toggle-btn"></a>
+      <h2>COFFEE and BBQ</h2>
+      <input type="button" id="show-listings" value="Show Listings">
+      <input type="button" id="hide-listings" value="Hide Listings">
+    </nav>
 
-      <!-- Map -->
-      <div id="map" class="col-lg-9">Hello Please load the map</div>
-    </div>
+    <!-- Map -->
+    <div class="content" id="map"></div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type='text/javascript' src='js/framework/knockout-3.4.0.js'></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK9Z7mgu83mZa9zGjzxBtsFl-S7r8M7d0&v=3&callback=initMap">
