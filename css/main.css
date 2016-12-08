@@ -4,8 +4,44 @@ html, body {
         width:100%;
       }
 
-h2 {
-  color: white;
+h3 {
+  /*color: #A0522D;*/
+  text-align: center;
+}
+
+#search {
+  border: 0.5px solid #ccc;
+  box-sizing: border-box;
+  margin: 0.5em 1em;
+  padding: 5px 10px;
+  width:90%;
+  transition: 0.1s;
+  outline: none;
+}
+
+#search:focus {
+    border: 2px solid #555;
+}
+
+ul {
+  padding: 0;
+  margin: 1em 1.2em;
+  list-style-type: none;
+}
+
+li {
+  font-size: 1.2em;
+  margin: 0.5em 0;
+  color: #83624B;
+}
+
+li:hover {
+  color: orange;
+}
+
+img  {
+  width: 30%;
+  bottom:0;
 }
 
 nav {
@@ -27,6 +63,7 @@ nav {
 .nav-toggle-btn {
   display: block;
   position: absolute;
+  top:auto;
   left: 300px;
   width: 40px;
   height: 40px;
@@ -41,9 +78,8 @@ nav {
   transform: translate(300px,0);
 }
 
-#map {
+#map-area {
   height: 100%;
-
 }
 
 h1 {

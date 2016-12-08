@@ -3,28 +3,38 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Neighborhood Map</title>
+    <title>Coffee Shops in Dallas</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK9Z7mgu83mZa9zGjzxBtsFl-S7r8M7d0">
+    </script>
   </head>
 
   <body>
-    <!-- List Area -->
-    <nav id="sideMenu">
-      <a href="#" class="nav-toggle-btn"></a>
-      <h2>COFFEE and BBQ</h2>
-      <input type="button" id="show-listings" value="Show Listings">
-      <input type="button" id="hide-listings" value="Hide Listings">
-    </nav>
+    <!-- List stores -->
+    <div class="col-md-3 side">
+      <h3>Best Coffee Shops in Dallas</h3>
+      <div id="search-area">
+        <input placeholder="Find your fav shop…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" id="search">
+      </div>
+
+      <ul data-bind="foreach: filterList">
+        <li data-bind="text: title, click: $parent.showStoreInfo"></li>
+      </ul>
+
+      <div>
+        <img src="./coffee.png" alt="coffe img" />
+      </div>
+    </div>
 
     <!-- Map -->
-    <div class="content" id="map"></div>
+    <div class="col-md-9" id="map-area"></div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type='text/javascript' src='js/framework/knockout-3.4.0.js'></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK9Z7mgu83mZa9zGjzxBtsFl-S7r8M7d0&v=3&callback=initMap">
-    </script>
-    <script async type="text/javascript" src="js/script.js"></script>
+    <!-- script -->
+    <script src='js/framework/jQuery.js'></script>
+    <script src='js/framework/knockout-3.4.0.js'></script>
+    <script src="js/model.js"></script>
+    <script async src="js/script.js"></script>
+    <script src="../oauth-signature/dist/oauth-signature.js"></script>
   </body>
 </html>
