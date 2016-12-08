@@ -1,8 +1,8 @@
 # OAuth 1.0a signature generator for node and the browser 
-### Compliant with [RFC 5843](http://tools.ietf.org/html/rfc5849) + [Errata ID 2550](http://www.rfc-editor.org/errata_search.php?rfc=5849) and [community spec](http://oauth.net/core/1.0a)
+### Compliant with [RFC5843](http://tools.ietf.org/html/rfc5849) + [Errata ID 2550](http://www.rfc-editor.org/errata_search.php?rfc=5849) and [OAuth 1.0a](http://oauth.net/core/1.0a)
 
 [![Build Status](https://travis-ci.org/bettiolo/oauth-signature-js.png?branch=master)](https://travis-ci.org/bettiolo/oauth-signature-js)
-[![Bower version](https://badge.fury.io/bo/oauth-signature.svg)](http://badge.fury.io/bo/oauth-signature-js)
+[![Bower version](https://badge.fury.io/bo/oauth-signature-js.svg)](http://badge.fury.io/bo/oauth-signature-js)
 [![NPM version](https://badge.fury.io/js/oauth-signature.png)](http://badge.fury.io/js/oauth-signature)
 [![Dependency Status](https://david-dm.org/bettiolo/oauth-signature-js.png?theme=shields.io)](https://david-dm.org/bettiolo/oauth-signature-js)
 
@@ -39,7 +39,7 @@ oauthSignature.generate(httpMethod, url, parameters, consumerSecret, tokenSecret
 the default `options` parameter is as follows
 ```js
 var options = {
-	encodeSignature: true // will encode the signature following the RFC 3986 Spec by default
+	encodeSignature: true // will encode the signature following the RFC3986 Spec by default
 }
 ```
 
@@ -64,14 +64,14 @@ var httpMethod = 'GET',
 	},
 	consumerSecret = 'kd94hf93k423kf44',
 	tokenSecret = 'pfkkdhi9sl3r4s00',
-	// generates a RFC 3986 encoded, BASE64 encoded HMAC-SHA1 hash
+	// generates a RFC3986 encoded, BASE64 encoded HMAC-SHA1 hash
 	encodedSignature = oauthSignature.generate(httpMethod, url, parameters, consumerSecret, tokenSecret),
 	// generates a BASE64 encode HMAC-SHA1 hash
 	signature = oauthSignature.generate(httpMethod, url, parameters, consumerSecret, tokenSecret,
 		{ encodeSignature: false});
 ```
 
-The `encodedSignature` variable will contain the RFC 3986 encoded, BASE64 encoded HMAC-SHA1 hash, ready to be used as a query parameter in a request: `tR3%2BTy81lMeYAr%2FFid0kMTYa%2FWM%3D`.
+The `encodedSignature` variable will contain the RFC3986 encoded, BASE64 encoded HMAC-SHA1 hash, ready to be used as a query parameter in a request: `tR3%2BTy81lMeYAr%2FFid0kMTYa%2FWM%3D`.
 
 The `signature` variable will contain the BASE64 HMAC-SHA1 hash, without encoding: `tR3+Ty81lMeYAr/Fid0kMTYa/WM=`.
 
@@ -85,7 +85,7 @@ http://photos.example.net/photos?file=vacation.jpg&size=original&oauth_consumer_
 
 ## Advantages
 
-This project has an extensive test coverage for all the corner cases present in the OAuth specifications ([RFC 5843](http://tools.ietf.org/html/rfc5849) + [Errata ID 2550](http://www.rfc-editor.org/errata_search.php?rfc=5849) and [OAuth.net community-based specification](http://oauth.net/core/1.0a))
+This project has an extensive test coverage for all the corner cases present in the OAuth specifications ([RFC5843](http://tools.ietf.org/html/rfc5849) + [Errata ID 2550](http://www.rfc-editor.org/errata_search.php?rfc=5849) and [OAuth.net community version](http://oauth.net/core/1.0a))
 
 Take a look at the test file [src/app/signature.tests.js](src/app/oauth-signature.tests.js)
 

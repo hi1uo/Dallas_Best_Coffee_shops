@@ -62,9 +62,11 @@ var ViewModel = function(){
   //show info window
   self.showStoreInfo = function(store){
     var storeDetail = '<div><h4 id="store-name">' + store.title() + '</h4>' +
-                      '<p>'+store.address()+'</p>'+
-                      '<p id="text">Rating on <a id="yelp-url">yelp</a>: ' +
-                      '<img id="yelp"></p></div>';
+                      '<p>Address: '+store.address()+'</p>'+
+                      '<p><a id="yelp-url">yelp </a>: '+
+                      '<span id="rating"></span> <img id="yelp"> '+
+                      '<span id="reviews"></span></p>'+
+                      '<p>Phone: '+'<span id="phone"></span>'+'</p></div>';
     infowindow.setContent(storeDetail);
     self.getYelpData(store);
     infowindow.open(map, store.marker());
@@ -80,6 +82,9 @@ var ViewModel = function(){
       if(storeName.indexOf(value.toLowerCase())>= 0){
         self.filterList.push(self.shopList()[i]);
         self.shopList()[i].marker().setMap(map);
+        var position = new google.maps.LatLng(self.shopList()[i].lat(), self.shopList()[i].lng());
+        console.log(self.shopList()[i].lat(), self.shopList()[i].lng());
+        bounds.extend(position);
       }
       else {
         self.shopList()[i].marker().setMap(null);
@@ -93,11 +98,21 @@ var ViewModel = function(){
     // Use the GET method for the request
     var httpMethod = 'GET';
     var url = 'http://api.yelp.com/v2/search/';
+
+    var nonce = function(length) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for(var i = 0; i < length; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+    };
+
     var parameters = {
       oauth_consumer_key: 'FBk0ZuP0PRBTekezNCM7xA',
       oauth_token: 'Ix8AXGdC8aLnJQjnXTblYit7i64UnKzt',
-      oauth_nonce: '3uYSQ2pTgmZeNu2VS4cg',
-      oauth_timestamp: '1477627865',
+      oauth_nonce: nonce(20),
+      oauth_timestamp: Math.floor(Date.now() / 1000),
       oauth_signature_method: 'HMAC-SHA1',
       oauth_version: '1.0',
       callback: 'cb',
@@ -120,8 +135,12 @@ var ViewModel = function(){
       cache: true,
       dataType: 'jsonp',
       success: function(response){
+        console.log(response);
         $('#yelp').attr("src", response.businesses[0].rating_img_url);
         $('#yelp-url').attr("href", response.businesses[0].url);
+        $('#rating').text(response.businesses[0].rating +"/5");
+        $('#reviews').text(response.businesses[0].review_count+" reviews");
+        $('#phone').text(response.businesses[0].display_phone);
       },
       error: function() {
         $('#text').html('Error: No DATA.');

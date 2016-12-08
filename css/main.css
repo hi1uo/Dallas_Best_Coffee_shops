@@ -104,3 +104,12 @@ input {
   padding: 10px 10px 30px 10px;
   text-align: left;
 }
+
+@media only screen and (max-width: 769px) {
+  .side > ul, .side img {
+    display: none;
+  };
+  input {
+    width: 100%;
+  }
+}
