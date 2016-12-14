@@ -6,7 +6,7 @@
     <title>Coffee Shops in Dallas</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK9Z7mgu83mZa9zGjzxBtsFl-S7r8M7d0">
+    <script sync src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK9Z7mgu83mZa9zGjzxBtsFl-S7r8M7d0">
     </script>
   </head>
 
@@ -14,8 +14,11 @@
     <!-- List stores -->
     <div class="col-md-3 side">
       <h3>Best Coffee Shops in Dallas</h3>
+      <!-- autofocus attribute is AWESOME!! -->
       <div id="search-area">
-        <input placeholder="Find your fav shop…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" id="search">
+        <input placeholder="Find your fav shop…" type="search"
+        data-bind="value: query, valueUpdate: 'keyup'"
+        autocomplete="on" id="search" autofocus>
       </div>
 
       <ul data-bind="foreach: filterList">

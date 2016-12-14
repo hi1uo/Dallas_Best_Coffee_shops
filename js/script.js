@@ -15,9 +15,13 @@ var Store = function(data){
 
   this.lat = ko.observable(data.lat);
   this.lng = ko.observable(data.lng);
+
+  var position = new google.maps.LatLng(this.lat(), this.lng());
+  this.position = ko.observable(position);
+
   //to make a marker
   var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(this.lat(), this.lng()),
+    position: this.position(),
     map: map,
     title: this.title(),
     animation: google.maps.Animation.DROP,
@@ -51,9 +55,9 @@ var ViewModel = function(){
   //Click on shops, show more detail.
   self.setClickFunction = function(){
     self.shopList().forEach(function(store){
-      var position = new google.maps.LatLng(store.lat(), store.lng());
-      bounds.extend(position);
+      bounds.extend(store.position());
       store.marker().addListener('click', function(){
+        map.fitBounds(bounds);
         self.showStoreInfo(store);
       });
     });
@@ -78,18 +82,24 @@ var ViewModel = function(){
     self.filterList([]);
 
     for(var i in self.shopList()){
-      var storeName = self.shopList()[i].title().toLowerCase();
+      var storeIndex = self.shopList()[i];
+      var storeName = storeIndex.title().toLowerCase();
       if(storeName.indexOf(value.toLowerCase())>= 0){
         self.filterList.push(self.shopList()[i]);
-        self.shopList()[i].marker().setMap(map);
-        var position = new google.maps.LatLng(self.shopList()[i].lat(), self.shopList()[i].lng());
-        console.log(self.shopList()[i].lat(), self.shopList()[i].lng());
-        bounds.extend(position);
+        storeIndex.marker().setMap(map);
+        bounds.extend(storeIndex.position());
+        map.fitBounds(bounds);
       }
       else {
-        self.shopList()[i].marker().setMap(null);
+        storeIndex.marker().setMap(null);
       }
     }
+
+    $("#search").keypress(function(e){
+      if(e.which == 13){
+        self.showStoreInfo(self.filterList()[0]);
+      }
+    });
   };
 
   //Yelp info
@@ -135,7 +145,6 @@ var ViewModel = function(){
       cache: true,
       dataType: 'jsonp',
       success: function(response){
-        console.log(response);
         $('#yelp').attr("src", response.businesses[0].rating_img_url);
         $('#yelp-url').attr("href", response.businesses[0].url);
         $('#rating').text(response.businesses[0].rating +"/5");
@@ -158,6 +167,12 @@ var ViewModel = function(){
     self.filterList(self.shopList());
     self.query.subscribe(self.search);
     map.fitBounds(bounds);
+
+    //get a function, press any key
+    // $('document').keypress(function(e){
+    //   $(this).find($('#search')).focus();
+    //   alert("you press");
+    // });
   });
 };
 
