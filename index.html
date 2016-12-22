@@ -13,8 +13,8 @@
   <body>
     <!-- List stores -->
     <div class="mobile-search-area overlay">
-      <span onclick="openNav()">&#9776;</span>
-      <input placeholder="Dallas Best Shops, search from here" type="search"
+      <span id="side-icon" onclick="openNav()">&#9776;</span>
+      <input placeholder="Dallas Best Shops..." type="search"
       data-bind="value: query, valueUpdate: 'keyup'"
       autocomplete="on" id="search" autofocus>
     </div>
@@ -31,7 +31,7 @@
 
     <script>
       function openNav() {
-          document.getElementById("mySidenav").style.width = "250px";
+          document.getElementById("mySidenav").style.width = "300px";
       }
       function closeNav() {
           document.getElementById("mySidenav").style.width = "0";

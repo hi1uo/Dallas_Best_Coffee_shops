@@ -67,7 +67,7 @@ var ViewModel = function(){
   self.showStoreInfo = function(store){
     var storeDetail = '<div><h4 id="store-name">' + store.title() + '</h4>' +
                       '<p>Address: '+store.address()+'</p>'+
-                      '<p><a id="yelp-url">yelp </a>: '+
+                      '<p><a target="_blank" id="yelp-url">yelp </a>: '+
                       '<span id="rating"></span> <img id="yelp"> '+
                       '<span id="reviews"></span></p>'+
                       '<p>Phone: '+'<span id="phone"></span>'+'</p></div>';
@@ -150,6 +150,7 @@ var ViewModel = function(){
         $('#rating').text(response.businesses[0].rating +"/5");
         $('#reviews').text(response.businesses[0].review_count+" reviews");
         $('#phone').text(response.businesses[0].display_phone);
+        console.log(response.businesses[0].display_phone);
       },
       error: function() {
         $('#text').html('Error: No DATA.');
@@ -167,7 +168,6 @@ var ViewModel = function(){
     self.filterList(self.shopList());
     self.query.subscribe(self.search);
     map.fitBounds(bounds);
-
 
   });
 };

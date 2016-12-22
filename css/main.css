@@ -5,14 +5,10 @@ html, body {
         position:relative;
       }
 
-h3 {
-  text-align: center;
-  color: white;
-}
-
-span {
-  font-size:30px;
+#side-icon {
+  font-size:20px;
   cursor:pointer;
+  color: white;
 }
 
 /*
@@ -90,7 +86,7 @@ input {
   .sidenav .closebtn{
     display: none;
   }
-  span {
+  #side-icon {
     display: none;
   }
 }
@@ -104,6 +100,7 @@ input {
     top: 0;
     left: 0;
     background-color: #111;
+    opacity: 0.9;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
