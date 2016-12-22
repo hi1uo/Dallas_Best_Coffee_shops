@@ -2,24 +2,42 @@ html, body {
         font-family: Arial, sans-serif;
         height:100%;
         width:100%;
+        position:relative;
       }
 
 h3 {
   text-align: center;
+  color: white;
+}
+
+span {
+  font-size:30px;
+  cursor:pointer;
+}
+
+/*
+overlay
+Credit: http://www.w3cplus.com/css/css-overlay-techniques.html
+*/
+
+.overlay {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  height: 10%;
+  z-index: 1;
+  background-color: rgba(0,0,0,0.2); /*暗淡的背景*/
 }
 
 #search {
   border: 0.5px solid #ccc;
-  box-sizing: border-box;
-  margin: 0.5em 1em;
+  align-self: center;
+  margin: 1.2em 0;
   padding: 5px 10px;
-  width:90%;
+  width:70%;
   transition: 0.1s;
   outline: none;
-}
-
-#search:focus {
-    border: 2px solid #555;
 }
 
 ul {
@@ -35,46 +53,13 @@ li {
 }
 
 li:hover {
-  color: orange;
+  color: white;
 }
 
-img  {
-  width: 30%;
-  bottom:0;
-}
-
-nav {
-  width: 300px;
-  height:100%;
-  position: fixed;
-  z-index: 5;
-  padding: 10px;
-  background-color: orange;
-  opacity: 0.9;
-  transform: translate(-300px,0);
-  transition: transform 0.3s ease;
-}
-
-.active-nav nav {
-  transform: translate(0,0);
-}
-
-.nav-toggle-btn {
-  display: block;
-  position: absolute;
-  top:auto;
-  left: 300px;
-  width: 40px;
-  height: 40px;
-  background-color: #666;
-}
-
-.content {
-  transition: transform 0.3s ease;
-}
-
-.active-nav .content {
-  transform: translate(300px,0);
+.log  {
+  width: 100px;
+  bottom:20px;
+  position:fixed;
 }
 
 #map-area {
@@ -87,6 +72,7 @@ h1 {
 
 input {
   font-size: 1em;
+  /*background-color: #DCDCDC;*/
 }
 
 #show-listings,
@@ -94,21 +80,39 @@ input {
   width: 9em;
 }
 
-.option-box {
-  background: #fff;
-  border: 1px solid #999;
-  border-radius: 3px;
-  height: 100%;
-  line-height: 35px;
-  padding: 10px 10px 30px 10px;
-  text-align: left;
+@media only screen and (min-width: 767px) {
+  .mobile-search-area{
+    padding-left: 500px;
+  }
+  #mySidenav{
+    width: 250px;
+  }
+  .sidenav .closebtn{
+    display: none;
+  }
+  span {
+    display: none;
+  }
 }
 
-@media only screen and (max-width: 769px) {
-  .side > ul, .side img {
-    display: none;
-  };
-  input {
-    width: 100%;
-  }
+/*small screen*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }

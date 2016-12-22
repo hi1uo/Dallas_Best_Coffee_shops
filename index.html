@@ -12,26 +12,31 @@
 
   <body>
     <!-- List stores -->
-    <div class="col-md-3 side">
-      <h3>Best Coffee Shops in Dallas</h3>
-      <!-- autofocus attribute is AWESOME!! -->
-      <div id="search-area">
-        <input placeholder="Find your fav shop…" type="search"
-        data-bind="value: query, valueUpdate: 'keyup'"
-        autocomplete="on" id="search" autofocus>
-      </div>
-
-      <ul data-bind="foreach: filterList">
-        <li data-bind="text: title, click: $parent.showStoreInfo"></li>
-      </ul>
-
-      <div>
-        <img src="./coffee.png" alt="coffe img" />
-      </div>
+    <div class="mobile-search-area overlay">
+      <span onclick="openNav()">&#9776;</span>
+      <input placeholder="Dallas Best Shops, search from here" type="search"
+      data-bind="value: query, valueUpdate: 'keyup'"
+      autocomplete="on" id="search" autofocus>
     </div>
 
     <!-- Map -->
-    <div class="col-md-9" id="map-area"></div>
+    <div id="map-area"></div>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <ul data-bind="foreach: filterList">
+        <li data-bind="text: title, click: $parent.showStoreInfo"></li>
+      </ul>
+    </div>
+
+    <script>
+      function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+      }
+      function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+      }
+    </script>
 
     <!-- script -->
     <script src='js/framework/jQuery.js'></script>

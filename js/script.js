@@ -168,11 +168,7 @@ var ViewModel = function(){
     self.query.subscribe(self.search);
     map.fitBounds(bounds);
 
-    //get a function, press any key
-    // $('document').keypress(function(e){
-    //   $(this).find($('#search')).focus();
-    //   alert("you press");
-    // });
+
   });
 };
 
