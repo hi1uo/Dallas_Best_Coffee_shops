@@ -106,7 +106,7 @@ var ViewModel = function(){
   self.getYelpData = function(store){
     //Not sure how to use YELP Fusion API, get stuck on Client Credentials of Oauth2
     // Use the GET method for the request
-    var url = 'httpS://api.yelp.com/v2/search/';
+    var url = 'https://api.yelp.com/v2/search/';
 
     var nonce = function(length) {
         var text = "";
