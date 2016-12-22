@@ -106,8 +106,7 @@ var ViewModel = function(){
   self.getYelpData = function(store){
     //Not sure how to use YELP Fusion API, get stuck on Client Credentials of Oauth2
     // Use the GET method for the request
-    var httpMethod = 'GET';
-    var url = 'http://api.yelp.com/v2/search/';
+    var url = 'httpS://api.yelp.com/v2/search/';
 
     var nonce = function(length) {
         var text = "";
@@ -134,7 +133,7 @@ var ViewModel = function(){
     var tokenSecret = '0sPuxJzhbHOK8YVc2iAdgih6v5A';
 
     // generates a RFC 3986 encoded, BASE64 encoded HMAC-SHA1 hash
-    var encodedSignature = oauthSignature.generate(httpMethod, url, parameters, consumerSecret, tokenSecret);
+    var encodedSignature = oauthSignature.generate('GET', url, parameters, consumerSecret, tokenSecret);
 
     // Add signature to list of parameters
     parameters.oauth_signature = encodedSignature;
