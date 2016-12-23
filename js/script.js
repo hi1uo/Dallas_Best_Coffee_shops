@@ -105,7 +105,7 @@ var ViewModel = function(){
   //Yelp info
   self.getYelpData = function(store){
     // Use the GET method for the request
-    var url = 'https://api.yelp.com/v2/business/';
+    var url = 'https://api.yelp.com/v2/search/';
 
     var nonce = function(length) {
         var text = "";
@@ -148,10 +148,9 @@ var ViewModel = function(){
         $('#rating').text(response.businesses[0].rating +"/5");
         $('#reviews').text(response.businesses[0].review_count+" reviews");
         $('#phone').text(response.businesses[0].display_phone);
-        console.log(response.businesses[0].display_phone);
       },
       error: function() {
-        $('#text').html('Error: No DATA.');
+        $('#yelp').html('Error: No DATA.');
       }
     };
 
