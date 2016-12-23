@@ -24,7 +24,7 @@ Credit: http://www.w3cplus.com/css/css-overlay-techniques.html
   width: 100%;
   height: 60px;
   z-index: 1;
-  background-color: rgba(0,0,0,0.2); /*暗淡的背景*/
+  background-color: rgba(0,0,0,0.4); /*暗淡的背景*/
 }
 
 #search {

@@ -41,7 +41,9 @@ var ViewModel = function(){
   self.init = function(){
     map = new google.maps.Map(document.getElementById('map-area'), {
       center: {lat: 32.7767, lng: -96.7970},
-      zoom: 15
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
     });
   };
 
@@ -57,7 +59,7 @@ var ViewModel = function(){
     self.shopList().forEach(function(store){
       bounds.extend(store.position());
       store.marker().addListener('click', function(){
-        map.fitBounds(bounds);
+        // console.log(this.position);
         self.showStoreInfo(store);
       });
     });
@@ -72,8 +74,11 @@ var ViewModel = function(){
                       '<span id="reviews"></span></p>'+
                       '<p>Phone: '+'<span id="phone"></span>'+'</p></div>';
     self.getYelpData(store);
-    var mq = window.matchMedia( "(max-width: 700px)" );
 
+    map.setCenter(store.position());
+    map.setZoom(15)
+
+    var mq = window.matchMedia( "(max-width: 700px)" );
     if(mq.matches){
       $('#Mobilenav').empty();
       document.getElementById("Mobilenav").style.height = "150px";
