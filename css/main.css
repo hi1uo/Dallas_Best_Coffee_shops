@@ -16,7 +16,6 @@ html, body {
 overlay
 Credit: http://www.w3cplus.com/css/css-overlay-techniques.html
 */
-
 .overlay {
   position: absolute;
   top: 0;
@@ -31,7 +30,7 @@ Credit: http://www.w3cplus.com/css/css-overlay-techniques.html
   border: 0.5px solid #ccc;
   margin-top: 10px;
   padding: 5px 10px;
-  width:50%;
+  width:70%;
   transition: 0.1s;
   outline: none;
 }
