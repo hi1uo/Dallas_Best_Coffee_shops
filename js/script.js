@@ -71,9 +71,18 @@ var ViewModel = function(){
                       '<span id="rating"></span> <img id="yelp"> '+
                       '<span id="reviews"></span></p>'+
                       '<p>Phone: '+'<span id="phone"></span>'+'</p></div>';
-    infowindow.setContent(storeDetail);
     self.getYelpData(store);
-    infowindow.open(map, store.marker());
+    var mq = window.matchMedia( "(max-width: 700px)" );
+
+    if(mq.matches){
+      $('#Mobilenav').empty();
+      document.getElementById("Mobilenav").style.height = "150px";
+      $('#Mobilenav').append(storeDetail);
+    }
+    else {
+      infowindow.setContent(storeDetail);
+      infowindow.open(map, store.marker());
+    }
   };
 
   //live search function
