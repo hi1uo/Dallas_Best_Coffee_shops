@@ -3,8 +3,8 @@ var map;
 
 // info window
 var infowindow = new google.maps.InfoWindow({
-  // content: '<div><h4 id="store-name"></h4><p id="store-address"></p><p id="yelp"></p></div>'
 });
+
 var bounds = new google.maps.LatLngBounds();
 
 // to get the data from Model, and make it an Class
@@ -104,9 +104,8 @@ var ViewModel = function(){
 
   //Yelp info
   self.getYelpData = function(store){
-    //Not sure how to use YELP Fusion API, get stuck on Client Credentials of Oauth2
     // Use the GET method for the request
-    var url = 'https://api.yelp.com/v2/search/';
+    var url = 'https://api.yelp.com/v2/business/';
 
     var nonce = function(length) {
         var text = "";
