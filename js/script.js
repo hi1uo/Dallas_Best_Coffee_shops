@@ -81,7 +81,7 @@ var ViewModel = function(){
     var mq = window.matchMedia( "(max-width: 700px)" );
     if(mq.matches){
       $('#Mobilenav').empty();
-      document.getElementById("Mobilenav").style.height = "150px";
+      document.getElementById("Mobilenav").style.height = "180px";
       $('#Mobilenav').append(storeDetail);
     }
     else {
