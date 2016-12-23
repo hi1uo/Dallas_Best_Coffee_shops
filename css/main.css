@@ -16,6 +16,7 @@ html, body {
 overlay
 Credit: http://www.w3cplus.com/css/css-overlay-techniques.html
 */
+
 .overlay {
   position: absolute;
   top: 0;
