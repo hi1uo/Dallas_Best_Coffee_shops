@@ -28,6 +28,7 @@ Credit: http://www.w3cplus.com/css/css-overlay-techniques.html
 }
 
 #search {
+  left: 0;
   border: 0.5px solid #ccc;
   margin-top: 10px;
   padding: 5px 10px;
@@ -62,11 +63,13 @@ h1 {
 
 input {
   font-size: 1em;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
 @media only screen and (min-width: 767px) {
   .search-area{
-    padding-left: 500px;
+    padding-left: 15%;
   }
   #mySidenav{
     width: 250px;
