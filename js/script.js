@@ -24,7 +24,7 @@ var Store = function(data){
     position: this.position(),
     map: map,
     title: this.title(),
-    animation: google.maps.Animation.DROP,
+    // animation: google.maps.Animation.DROP,
   });
   // marker variables
   this.marker = ko.observable(marker);
@@ -59,7 +59,6 @@ var ViewModel = function(){
     self.shopList().forEach(function(store){
       bounds.extend(store.position());
       store.marker().addListener('click', function(){
-        // console.log(this.position);
         self.showStoreInfo(store);
       });
     });
