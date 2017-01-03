@@ -5,7 +5,7 @@ In this project, I developed a single page application featuring a map of 12 hig
 
 Technology Used: HTML, CSS, bootstrap, JavaScript, jQuery, Ajax, knockoutJS, Google Maps API, Yelp API, and Gulp.
 
-Run the App from here: https://jerryluo1989.github.io/Neighborhood-Map/
+Run the App from here: https://jerryluo1989.github.io/Neighborhood-Map/dist/index.html
 
 #### Desktop User
 - Design:
