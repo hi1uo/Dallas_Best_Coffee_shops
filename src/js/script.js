@@ -8,6 +8,7 @@ var bounds = new google.maps.LatLngBounds();
 
 // to get the data from Model, and make it an Class
 var Store = function(data){
+  'use strict';
   //swtich variables to Knockout observables
   this.title = ko.observable(data.title);
   this.address = ko.observable(data.address);
@@ -29,6 +30,8 @@ var Store = function(data){
 
 // ViewModel KO
 var ViewModel = function(){
+  'use strict';
+
   var self = this;
   self.shopList = ko.observableArray([]);
   self.filterList = ko.observableArray([]);
@@ -64,15 +67,14 @@ var ViewModel = function(){
 
   //show info window
   self.showStoreInfo = function(store){
-    var storeDetail = '<div><h4 id="store-name">' + store.title() + '</h4>' +
+    map.setCenter(store.position());
+    map.setZoom(15);
+    var storeDetail = '<div><h4 id="store-name">' + store.title()+'</h4>' +
                       '<p>Address: '+store.address()+'</p>'+
                       '<p><a target="_blank" id="yelp-url">yelp </a>: '+
                       '<span id="rating"></span> <img id="yelp"> '+
                       '<span id="reviews"></span></p>'+
                       '<p>Phone: '+'<span id="phone"></span>'+'</p></div>';
-    self.getYelpData(store);
-    map.setCenter(store.position());
-    map.setZoom(15);
     //media query
     var mq = window.matchMedia( "(max-width: 700px)" );
     if(mq.matches){
@@ -86,6 +88,7 @@ var ViewModel = function(){
       infowindow.setContent(storeDetail);
       infowindow.open(map, store.marker());
     }
+    self.getYelpData(store);
   };
 
   //live search function
@@ -118,9 +121,9 @@ var ViewModel = function(){
 
   //Yelp info
   self.getYelpData = function(store){
-    // Use the GET method for the request
     var url = 'https://api.yelp.com/v2/search/';
 
+  // Nnonce generator: https://blog.nraboy.com/2015/03/create-a-random-nonce-string-using-javascript/
     var nonce = function(length) {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

@@ -9,9 +9,23 @@ var uglify = require('gulp-uglify');
 var del = require('del');
 var runSequence = require('run-sequence');
 
+var critical = require('critical');
+
 //build
 gulp.task('default', function(){
   runSequence(['clean:dist', 'htmlmin', 'cssmin', 'js', 'img', 'resize']);
+});
+
+gulp.task('criticalcss', function (cb) {
+  critical.generate({
+    inline: true,
+    base: 'dist/',
+    src: 'index.html',
+    dest: 'index.html',
+    minify: true,
+    width: 1300,
+    height: 900
+  });
 });
 
 //Minify HTML
