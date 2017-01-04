@@ -94,7 +94,7 @@ function initMap() {
       map.setZoom(15);
       var storeDetail = '<div><h4 id="store-name">' + store.title+'</h4>' +
                         '<p>Address: '+store.address+'</p>'+
-                        '<p><a target="_blank" id="yelp-url">yelp </a>: '+
+                        '<p><a target="_blank" id="yelp-url" data-bind="attr: {href: reviewsurl}">yelp </a>: '+
                         '<span id="rating"></span> <img id="yelp"> '+
                         '<span id="reviews"></span></p>'+
                         '<p>Phone: '+'<span id="phone"></span>'+'</p></div>';
@@ -124,12 +124,13 @@ function initMap() {
         var storeName = storeIndex.title.toLowerCase();
         if(storeName.indexOf(value.toLowerCase())>= 0){
           self.filterList.push(self.shopList()[i]);
-          storeIndex.marker.setMap(map);
+          // instead of setMap(map), usesetVisible(true|false), which only show/hide on the map
+          storeIndex.marker.SetVisible(true);
           bounds.extend(storeIndex.position);
           map.fitBounds(bounds);
         }
         else
-          storeIndex.marker.setMap(null);
+          storeIndex.marker.SetVisible(false);
         }
       //press Enter to get the first shop info in the filterList
       $("#search").keypress(function(e){
@@ -142,8 +143,7 @@ function initMap() {
     //Yelp info
     var getYelpData = function(store){
       var url = 'https://api.yelp.com/v2/search/';
-
-    // Nnonce generator: https://blog.nraboy.com/2015/03/create-a-random-nonce-string-using-javascript/
+      // Nnonce generator: https://blog.nraboy.com/2015/03/create-a-random-nonce-string-using-javascript/
       var nonce = function(length) {
           var text = "";
           var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -179,18 +179,23 @@ function initMap() {
         data: parameters,
         cache: true,
         dataType: 'jsonp',
-        success: function(response){
-          $('#yelp').attr("src", response.businesses[0].rating_img_url);
-          $('#yelp-url').attr("href", response.businesses[0].url);
-          $('#rating').text(response.businesses[0].rating +"/5");
-          $('#reviews').text(response.businesses[0].review_count+" reviews");
-          $('#phone').text(response.businesses[0].display_phone);
-        },
         error: function() {
-          $('#yelp').html('Error: No DATA.');
+
         }
       };
-      $.ajax(ajaxSettings);
+      $.ajax(ajaxSettings)
+      .done(function(response){
+        self.reviewsurl("google.com");
+        console.log(self.reviewsurl);
+        $('#yelp-url').attr("href", response.businesses[0].url);
+        $('#rating').text(response.businesses[0].rating +"/5");
+        $('#reviews').text(response.businesses[0].review_count+" reviews");
+        $('#phone').text(response.businesses[0].display_phone);
+      })
+      .fail(function(error){
+        $('#yelp').html('Error: No DATA.');
+      });
+
     };
 
 
@@ -206,4 +211,8 @@ function initMap() {
 };
 
 ko.applyBindings(new ViewModel());
-};
+}
+
+function googleError(){
+  alert("Oops! Cannot load the map");
+}
