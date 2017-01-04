@@ -1,6 +1,16 @@
 //create a map object
 var map;
 
+//Asynchronous initilization of google map
+self.initMap = function(){
+  map = new google.maps.Map(document.getElementById('map-area'), {
+    center: {lat: 32.7767, lng: -96.7970},
+    // zoom: 15,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    //this will disable other option menu on the google map
+    disableDefaultUI: true
+  });
+
 // info window
 var infowindow = new google.maps.InfoWindow();
 
@@ -37,16 +47,7 @@ var ViewModel = function(){
   self.filterList = ko.observableArray([]);
   self.query = ko.observable('');
 
-  //initialize google map
-  self.init = function(){
-    map = new google.maps.Map(document.getElementById('map-area'), {
-      center: {lat: 32.7767, lng: -96.7970},
-      // zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      //this will disable other option menu on the google map
-      disableDefaultUI: true
-    });
-  };
+
 
   //datas -> observableArray
   self.buildLocations = function(){
@@ -60,9 +61,21 @@ var ViewModel = function(){
     self.shopList().forEach(function(store){
       bounds.extend(store.position());
       store.marker().addListener('click', function(){
+        //marker boucing
         self.showStoreInfo(store);
       });
     });
+  };
+
+  //When click the markers or name in the list, the marker will bounce
+  self.toggleBounce = function (marker){
+    if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          window.setTimeout(function(){marker.setAnimation(null);},700);
+        }
+
   };
 
   //show info window
@@ -85,6 +98,8 @@ var ViewModel = function(){
       $('#Mobilenav').append(storeDetail);
     }
     else {
+      // bouncing function only happen on the larger screen
+      self.toggleBounce(store.marker());
       infowindow.setContent(storeDetail);
       infowindow.open(map, store.marker());
     }
@@ -175,7 +190,7 @@ var ViewModel = function(){
 
 //loading the page
   google.maps.event.addDomListener(window, 'load', function() {
-    self.init();
+    // self.init();
     self.buildLocations();
     self.setClickFunction();
     self.filterList(self.shopList());
@@ -187,3 +202,4 @@ var ViewModel = function(){
 };
 
 ko.applyBindings(new ViewModel());
+};

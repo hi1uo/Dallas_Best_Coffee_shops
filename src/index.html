@@ -60,12 +60,14 @@
     </script>
 
     <!-- script -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK9Z7mgu83mZa9zGjzxBtsFl-S7r8M7d0">
-    </script>
     <script src='js/framework/jQuery.js' async></script>
     <script src='js/framework/knockout-3.4.0.js' async></script>
     <script src="js/model.js" async></script>
     <script src="js/script.js" async></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK9Z7mgu83mZa9zGjzxBtsFl-S7r8M7d0&callback=initMap"
+    onerror="googleError()">
+    </script>
     <script src="../dist/bower_components/oauth-signature/dist/oauth-signature.js" async></script>
   </body>
 </html>

@@ -44,6 +44,7 @@ var shopDatabase = [
   },
   {
     title: "Houndstooth Coffee",
+    address: "1900 N Henderson Ave, Dallas, TX 75206",
     lat: 32.811740,
     lng: -96.774498
   },
