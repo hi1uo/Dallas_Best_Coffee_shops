@@ -102,20 +102,6 @@ input {
     padding-top: 60px;
 }
 
-.mobilenav {
-    height:0;
-    width: 100%;
-    position: fixed;
-    z-index: 1;
-    bottom: 0;
-    left: 0;
-    background-color: white;
-    opacity: 0.9;
-    padding: 10px;
-    overflow-x: hidden;
-    transition: 0.5s;
-}
-
 .sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -207,9 +193,7 @@ input {
   .search-area{
     padding-left: 10%;
   }
-  #mySidenav{
-    width: 250px;
-  }
+
   #side-icon, .closebtn{
     display: none;
   }
@@ -222,7 +206,7 @@ input {
 /*small screen*/
 .sidenav {
     height: 100%;
-    width: 0;
+    width: 300px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -236,7 +220,7 @@ input {
 }
 
 .mobilenav {
-    height:0;
+    height:150px;
     width: 100%;
     position: fixed;
     z-index: 1;
@@ -253,15 +237,6 @@ input {
 .sidenav .closebtn {
     position: absolute;
     top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-.mobilenav .closebtn
-{
-    position: absolute;
-    bottom: 180px;
     right: 25px;
     font-size: 36px;
     margin-left: 50px;

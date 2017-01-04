@@ -33,31 +33,22 @@
 
     <!-- Search & hamburger icon -->
     <div class="search-area overlay">
-      <span id="side-icon" onclick="openNav()">&#9776;</span>
+      <span id="side-icon" data-bind="click: openNav">&#9776;</span>
       <input placeholder="Best Coffee Shops in Dallas. Type in to search..." type="search"
       data-bind="value: query, valueUpdate: 'keyup'"
       autocomplete="on" id="search" autofocus>
     </div>
 
     <!-- side-list -->
-    <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div id="mySidenav" class="sidenav" data-bind="visible: showSidelist">
+      <a href="javascript:void(0)" class="closebtn" data-bind="click: closeNav">&times;</a>
       <ul data-bind="foreach: filterList">
         <li data-bind="text: title, click: $parent.showStoreInfo"></li>
       </ul>
     </div>
 
-    <div id="Mobilenav" class="mobilenav"></div>
-
-    <script async>
-      function openNav() {
-        document.getElementById("mySidenav").style.width = "300px";
-        document.getElementById("Mobilenav").style.height = "0";
-      }
-      function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-      }
-    </script>
+    <div id="Mobilenav" class="mobilenav" data-bind="visible: showmobilepanel,
+      html: detailmb"></div>
 
     <!-- script -->
     <script src='js/framework/jQuery.js' async></script>
