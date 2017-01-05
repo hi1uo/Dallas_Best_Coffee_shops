@@ -54,10 +54,12 @@ function initMap() {
 
     self.closeNav = function(){
       self.showSidelist(false);
+      self.showmobilepanel(true);
     };
 
     self.openNav= function(){
       self.showSidelist(true);
+      self.showmobilepanel(false);
     };
 
     //datas -> observableArray
