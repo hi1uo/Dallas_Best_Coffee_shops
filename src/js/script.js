@@ -125,17 +125,17 @@ function initMap() {
       //clear out filterList
       self.filterList([]);
       self.shopList().forEach(function(storeIndex){
-        // var storeIndex = self.shopList()[i];
+
         var storeName = storeIndex.title.toLowerCase();
         if(storeName.indexOf(value.toLowerCase())>= 0){
-          self.filterList.push(self.shopList()[i]);
+          self.filterList.push(storeIndex);
           // instead of setMap(map), usesetVisible(true|false), which only show/hide on the map
-          storeIndex.marker.SetVisible(true);
+          storeIndex.marker.setVisible(true);
           bounds.extend(storeIndex.position);
           map.fitBounds(bounds);
         }
         else
-          storeIndex.marker.SetVisible(false);
+          storeIndex.marker.setVisible(false);
         });
       //press Enter to get the first shop info in the filterList
       $("#search").keypress(function(e){
