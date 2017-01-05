@@ -47,8 +47,20 @@
       </ul>
     </div>
 
-    <div id="Mobilenav" class="mobilenav" data-bind="visible: showmobilepanel,
-      html: detailmb"></div>
+    <!-- <div id="Mobilenav" class="mobilenav" data-bind="visible: showmobilepanel,
+      html: detailmb"></div> -->
+    <div id="Mobilenav" class="mobilenav" data-bind="visible: showmobilepanel">
+      <div id="yelp">
+        <h4 id="store-name" data-bind="html: storeName"></h4>
+        <p>Address: <span data-bind="html: storeAddress"></span></p>
+        <p>
+          <a target="_blank" id="yelp-url" data-bind="attr:{ href: yelURL}">YELP:</a>
+          <span id="rating" data-bind="html: reviewRate"></span><img id="rating-img" data-bind="attr:{ src: ratingImg}">
+          <span id="reviews" data-bind="html: reviewsNumber"></span>
+        </p>
+        <p>Phone: <span id="phone" data-bind="html: phoneNumber"></span></p>
+      </div>
+    </div>
 
     <!-- script -->
     <script src='js/framework/jQuery.js' async></script>

@@ -40,6 +40,16 @@ function initMap() {
     self.filterList = ko.observableArray([]);
     self.query = ko.observable('');
 
+    // Mobile bottom Panel and content observable
+    self.showmobilepanel = ko.observable(false);
+    self.detailmb = ko.observable("");
+    self.storeName = ko.observable("");
+    self.storeAddress = ko.observable("");
+    self.reviewRate = ko.observable("");
+    self.ratingImg = ko.observable("");
+    self.reviewsNumber = ko.observable("");
+    self.phoneNumber = ko.observable("");
+
     //Depending on screen size, the sideList will show or hidde by default.
     var mq = window.matchMedia( "(max-width: 700px)" );
     if(mq.matches){
@@ -47,10 +57,6 @@ function initMap() {
     }
     else
       self.showSidelist = ko.observable(true);
-
-    // Mobile bottom Panel and content observable
-    self.showmobilepanel = ko.observable(false);
-    self.detailmb = ko.observable("");
 
     self.closeNav = function(){
       self.showSidelist(false);
@@ -87,31 +93,30 @@ function initMap() {
           }
         };
 
+    self.yelURL = ko.observable('');
     //show info window
     self.showStoreInfo = function(store){
       toggleBounce(store.marker);
       map.setCenter(store.position);
       map.setZoom(15);
-      var storeDetail = '<div><h4 id="store-name">' + store.title+'</h4>' +
-                        '<p>Address: '+store.address+'</p>'+
-                        '<p><a target="_blank" id="yelp-url" data-bind="attr: {href: reviewsurl}">yelp </a>: '+
-                        '<span id="rating"></span> <img id="yelp"> '+
-                        '<span id="reviews"></span></p>'+
-                        '<p>Phone: '+'<span id="phone"></span>'+'</p></div>';
+
+      //Update the information
+      self.storeName(store.title);
+      self.storeAddress(store.address);
+      getYelpData(store);
+      var storeDetail = $('#Mobilenav').html();
       //media query
       var mq = window.matchMedia( "(max-width: 700px)" );
       if(mq.matches){
-        //when on the mobile device, all info will show in the bottom.
+        //when on the mobile device, all info will show in the bottom panel.
         self.showmobilepanel(true);
-        self.detailmb("");
-        self.detailmb(storeDetail);
         self.closeNav();
       }
       else {
         infowindow.setContent(storeDetail);
         infowindow.open(map, store.marker);
       }
-      getYelpData(store);
+
     };
 
     //live search function
@@ -185,12 +190,11 @@ function initMap() {
       };
       $.ajax(ajaxSettings)
       .done(function(response){
-        self.reviewsurl("google.com");
-        console.log(self.reviewsurl);
-        $('#yelp-url').attr("href", response.businesses[0].url);
-        $('#rating').text(response.businesses[0].rating +"/5");
-        $('#reviews').text(response.businesses[0].review_count+" reviews");
-        $('#phone').text(response.businesses[0].display_phone);
+        self.yelURL(response.businesses[0].url)
+        .reviewRate(response.businesses[0].rating +"/5 ")
+        .ratingImg(response.businesses[0].rating_img_url)
+        .reviewsNumber(response.businesses[0].review_count+" reviews")
+        .phoneNumber(response.businesses[0].display_phone);
       })
       .fail(function(error){
         $('#yelp').html('Error: No DATA.');
