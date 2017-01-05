@@ -95,11 +95,6 @@ function initMap() {
       toggleBounce(store.marker);
       map.setCenter(store.position);
       map.setZoom(15);
-
-      //Update the information
-      var storeNameHTML = '<h4 id="store-name">'+store.title+'</h4>';
-      var storeAddressHTML = '<p>Address: <span>'+store.address+'</span></p>';
-      storeDetail = storeNameHTML + storeAddressHTML;
       getYelpData(store);
       updateView(store, storeDetail);
     };
@@ -137,13 +132,15 @@ function initMap() {
         else
           storeIndex.marker.setVisible(false);
         });
-      //press Enter to get the first shop info in the filterList
-      $("#search").keypress(function(e){
-        if(e.which == 13){
-          self.showStoreInfo(self.filterList()[0]);
-        }
-      });
     };
+
+    //press Enter to get the first shop info in the filterList
+    $("#search").keypress(function(e){
+      if(e.which == 13){
+        console.log(self.filterList()[0])
+        self.showStoreInfo(self.filterList()[0]);
+      }
+    });
 
     //Yelp info
     var getYelpData = function(store){
@@ -187,12 +184,15 @@ function initMap() {
       };
       $.ajax(ajaxSettings)
       .done(function(response){
+        //Build the info window stream
+        var storeNameHTML = '<h4 id="store-name">'+store.title+'</h4>';
+        var storeAddressHTML = '<p>Address: <span>'+store.address+'</span></p>';
         var yelpURLHTML = '<a target="_blank" id="yelp-url" href="'+response.businesses[0].url+'">yelp:</a>';
         var yelpRatingHTML = '<span id="rating">'+response.businesses[0].rating +"/5 "+'</span>';
         var ratingImgHTML = '<img id="rating-img" src ="'+response.businesses[0].rating_img_url+'">';
         var reviewNumberHTML = '<span id="reviews">'+response.businesses[0].review_count+" reviews"+'</span>';
         var phoneHTML = '<p>Phone: '+response.businesses[0].display_phone+'</p>';
-        storeDetail += '<p>'+yelpURLHTML+yelpRatingHTML+ratingImgHTML+reviewNumberHTML+phoneHTML+'</p>';
+        storeDetail = storeNameHTML + storeAddressHTML + '<p>'+yelpURLHTML+yelpRatingHTML+ratingImgHTML+reviewNumberHTML+phoneHTML+'</p>';
         updateView(store, storeDetail);
       })
       .fail(function(){
@@ -200,7 +200,7 @@ function initMap() {
     };
 
 
-//loading the page
+  //loading the page, and initilize
   google.maps.event.addDomListener(window, 'load', function(){
     buildLocations();
     setClickFunction();
