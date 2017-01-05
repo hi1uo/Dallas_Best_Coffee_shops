@@ -36,7 +36,6 @@ function initMap() {
   // ViewModel KO
   var ViewModel = function(){
     var self = this;
-    var storeDetail;
     self.shopList = ko.observableArray([]);
     self.filterList = ko.observableArray([]);
     self.query = ko.observable('');
@@ -88,8 +87,8 @@ function initMap() {
           }
         };
 
-    self.yelURL = ko.observable('');
     //show info window
+    var storeDetail;
     self.showStoreInfo = function(store){
       toggleBounce(store.marker);
       map.setCenter(store.position);
@@ -190,7 +189,8 @@ function initMap() {
         var yelpRatingHTML = '<span id="rating">'+response.businesses[0].rating +"/5 "+'</span>';
         var ratingImgHTML = '<img id="rating-img" src ="'+response.businesses[0].rating_img_url+'">';
         var reviewNumberHTML = '<span id="reviews">'+response.businesses[0].review_count+" reviews"+'</span>';
-        storeDetail += yelpURLHTML+yelpRatingHTML+ratingImgHTML+reviewNumberHTML;
+        var phoneHTML = '<p>Phone: '+response.businesses[0].display_phone+'</p>';
+        storeDetail += '<p>'+yelpURLHTML+yelpRatingHTML+ratingImgHTML+reviewNumberHTML+phoneHTML+'</p>';
         updateView(store, storeDetail);
       })
       .fail(function(){
