@@ -36,19 +36,14 @@ function initMap() {
   // ViewModel KO
   var ViewModel = function(){
     var self = this;
+    var storeDetail;
     self.shopList = ko.observableArray([]);
     self.filterList = ko.observableArray([]);
     self.query = ko.observable('');
 
     // Mobile bottom Panel and content observable
     self.showmobilepanel = ko.observable(false);
-    self.detailmb = ko.observable("");
-    self.storeName = ko.observable("");
-    self.storeAddress = ko.observable("");
-    self.reviewRate = ko.observable("");
-    self.ratingImg = ko.observable("");
-    self.reviewsNumber = ko.observable("");
-    self.phoneNumber = ko.observable("");
+    self.shopDetailMobil = ko.observable("");
 
     //Depending on screen size, the sideList will show or hidde by default.
     var mq = window.matchMedia( "(max-width: 700px)" );
@@ -101,22 +96,26 @@ function initMap() {
       map.setZoom(15);
 
       //Update the information
-      self.storeName(store.title);
-      self.storeAddress(store.address);
+      var storeNameHTML = '<h4 id="store-name">'+store.title+'</h4>';
+      var storeAddressHTML = '<p>Address: <span>'+store.address+'</span></p>';
+      storeDetail = storeNameHTML + storeAddressHTML;
       getYelpData(store);
-      var storeDetail = $('#Mobilenav').html();
-      //media query
+      updateView(store, storeDetail);
+    };
+
+    var updateView = function(store, storeDetailDOM){
       var mq = window.matchMedia( "(max-width: 700px)" );
       if(mq.matches){
         //when on the mobile device, all info will show in the bottom panel.
         self.showmobilepanel(true);
         self.closeNav();
+        self.shopDetailMobil('');
+        self.shopDetailMobil(storeDetailDOM);
       }
       else {
-        infowindow.setContent(storeDetail);
+        infowindow.setContent(storeDetailDOM);
         infowindow.open(map, store.marker);
       }
-
     };
 
     //live search function
@@ -124,8 +123,8 @@ function initMap() {
     self.search = function(value){
       //clear out filterList
       self.filterList([]);
-      for(var i in self.shopList()){
-        var storeIndex = self.shopList()[i];
+      self.shopList().forEach(function(storeIndex){
+        // var storeIndex = self.shopList()[i];
         var storeName = storeIndex.title.toLowerCase();
         if(storeName.indexOf(value.toLowerCase())>= 0){
           self.filterList.push(self.shopList()[i]);
@@ -136,7 +135,7 @@ function initMap() {
         }
         else
           storeIndex.marker.SetVisible(false);
-        }
+        });
       //press Enter to get the first shop info in the filterList
       $("#search").keypress(function(e){
         if(e.which == 13){
@@ -183,23 +182,19 @@ function initMap() {
         url: url,
         data: parameters,
         cache: true,
-        dataType: 'jsonp',
-        error: function() {
-
-        }
+        dataType: 'jsonp'
       };
       $.ajax(ajaxSettings)
       .done(function(response){
-        self.yelURL(response.businesses[0].url)
-        .reviewRate(response.businesses[0].rating +"/5 ")
-        .ratingImg(response.businesses[0].rating_img_url)
-        .reviewsNumber(response.businesses[0].review_count+" reviews")
-        .phoneNumber(response.businesses[0].display_phone);
+        var yelpURLHTML = '<a target="_blank" id="yelp-url" href="'+response.businesses[0].url+'">yelp:</a>';
+        var yelpRatingHTML = '<span id="rating">'+response.businesses[0].rating +"/5 "+'</span>';
+        var ratingImgHTML = '<img id="rating-img" src ="'+response.businesses[0].rating_img_url+'">';
+        var reviewNumberHTML = '<span id="reviews">'+response.businesses[0].review_count+" reviews"+'</span>';
+        storeDetail += yelpURLHTML+yelpRatingHTML+ratingImgHTML+reviewNumberHTML;
+        updateView(store, storeDetail);
       })
-      .fail(function(error){
-        $('#yelp').html('Error: No DATA.');
-      });
-
+      .fail(function(){
+        alert('No Yelp Data');});
     };
 
 
@@ -218,5 +213,6 @@ ko.applyBindings(new ViewModel());
 }
 
 function googleError(){
+  "use strict";
   alert("Oops! Cannot load the map");
 }
