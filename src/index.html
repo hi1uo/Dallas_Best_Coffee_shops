@@ -4,60 +4,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <title>Coffee Shops in Dallas</title>
-    <style>
-      html,
-      body {
-        font-family: Arial, sans-serif;
-        height: 100%;
-        width: 100%;
-        position: relative;
-      }
-      ul {
-        padding: 0;
-        margin: 1em 1.2em;
-        list-style-type: none;
-      }
-      li {
-        font-size: 1.2em;
-        margin: 0.5em 0;
-        color: #83624B;
-      }
-    </style>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
   </head>
 
   <body>
     <!-- Map -->
-    <div id="map-area"></div>
+    <section id="map-area"></section>
 
     <!-- Search & hamburger icon -->
-    <div class="search-area overlay">
+    <aside class="search-area overlay">
       <span id="side-icon" data-bind="click: openNav">&#9776;</span>
       <input placeholder="Best Coffee Shops in Dallas. Type in to search..." type="search"
-      data-bind="value: query, valueUpdate: 'keyup'"
+      data-bind="value: query, valueUpdate: 'input', event: { keyup: onEnter }"
       autocomplete="on" id="search" autofocus>
-    </div>
+    </aside>
 
     <!-- side-list -->
-    <div id="mySidenav" class="sidenav" data-bind="visible: showSidelist">
+    <section id="mySidenav" class="sidenav" data-bind="visible: showSidelist">
       <a href="javascript:void(0)" class="closebtn" data-bind="click: closeNav">&times;</a>
       <ul data-bind="foreach: filterList">
         <li data-bind="text: title, click: $parent.showStoreInfo"></li>
       </ul>
-    </div>
+      <footer>Power by Yelp</footer>
+    </section>
 
-    <div id="Mobilenav" class="mobilenav" data-bind="visible: showmobilepanel,html: shopDetailMobil"></div>
+    <section id="Mobilenav" class="mobilenav" data-bind="visible: showmobilepanel,html: shopDetailMobile"></section>
 
     <!-- script -->
     <script src='js/framework/jQuery.js' async></script>
     <script src='js/framework/knockout-3.4.0.js' async></script>
     <script src="js/model.js" async></script>
-    <script src="js/script.js" async></script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK9Z7mgu83mZa9zGjzxBtsFl-S7r8M7d0&callback=initMap"
     onerror="googleError()">
     </script>
     <script src="bower_components/oauth-signature/dist/oauth-signature.js" async></script>
+    <script src="js/script.js" async></script>
   </body>
 </html>

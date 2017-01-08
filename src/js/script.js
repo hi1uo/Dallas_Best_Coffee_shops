@@ -4,7 +4,7 @@ var map;
 //Asynchronous initilization of google map
 function initMap() {
   'use strict';
-  map = new google.maps.Map(document.getElementById('map-area'), {
+  map = new google.maps.Map(document.getElementById("map-area"), {
     center: {lat: 32.7767, lng: -96.7970},
     // zoom: 15,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -38,11 +38,11 @@ function initMap() {
     var self = this;
     self.shopList = ko.observableArray([]);
     self.filterList = ko.observableArray([]);
-    self.query = ko.observable('');
+    self.query = ko.observable("");
 
     // Mobile bottom Panel and content observable
     self.showmobilepanel = ko.observable(false);
-    self.shopDetailMobil = ko.observable("");
+    self.shopDetailMobile = ko.observable("");
 
     //Depending on screen size, the sideList will show or hidde by default.
     var mq = window.matchMedia( "(max-width: 700px)" );
@@ -54,7 +54,7 @@ function initMap() {
 
     self.closeNav = function(){
       self.showSidelist(false);
-      self.showmobilepanel(true);
+      // self.showmobilepanel(true);
     };
 
     self.openNav= function(){
@@ -103,12 +103,13 @@ function initMap() {
       var mq = window.matchMedia( "(max-width: 700px)" );
       if(mq.matches){
         //when on the mobile device, all info will show in the bottom panel.
+        self.shopDetailMobile("");
         self.showmobilepanel(true);
         self.closeNav();
-        self.shopDetailMobil('');
-        self.shopDetailMobil(storeDetailDOM);
+        self.shopDetailMobile(storeDetailDOM);
       }
       else {
+        infowindow.setContent("");
         infowindow.setContent(storeDetailDOM);
         infowindow.open(map, store.marker);
       }
@@ -120,7 +121,6 @@ function initMap() {
       //clear out filterList
       self.filterList([]);
       self.shopList().forEach(function(storeIndex){
-
         var storeName = storeIndex.title.toLowerCase();
         if(storeName.indexOf(value.toLowerCase())>= 0){
           self.filterList.push(storeIndex);
@@ -135,16 +135,16 @@ function initMap() {
     };
 
     //press Enter to get the first shop info in the filterList
-    $("#search").keypress(function(e){
-      if(e.which == 13){
-        console.log(self.filterList()[0])
+    //Credit: http://stackoverflow.com/questions/23087721/call-function-on-enter-key-press-knockout-js
+    self.onEnter = function(d, e){
+      if(e.keyCode === 13){
         self.showStoreInfo(self.filterList()[0]);
       }
-    });
+    };
 
     //Yelp info
     var getYelpData = function(store){
-      var url = 'https://api.yelp.com/v2/search/';
+      var url = "https://api.yelp.com/v2/search/";
       // Nnonce generator: https://blog.nraboy.com/2015/03/create-a-random-nonce-string-using-javascript/
       var nonce = function(length) {
           var text = "";
@@ -184,14 +184,23 @@ function initMap() {
       };
       $.ajax(ajaxSettings)
       .done(function(response){
+        // Either inform user that there's no data available or show data.
+        var
+        url = response.businesses[0].url ? response.businesses[0].url : url = 'No link',
+        rating = response.businesses[0].rating ? response.businesses[0].rating : rating = 'No rating available',
+        phone = response.businesses[0].display_phone ? response.businesses[0].display_phone: phone= 'No phone number provided',
+        address = response.businesses[0].address ? response.businesses[0].address: address= 'Address not found',
+        rating_img = response.businesses[0].rating_img_url ? response.businesses[0].rating_img_url: rating_img= ' ',
+        total = response.businesses[0].review_count ? response.businesses[0].review_count: address= ' ';
+
         //Build the info window stream
         var storeNameHTML = '<h4 id="store-name">'+store.title+'</h4>';
-        var storeAddressHTML = '<p>Address: <span>'+store.address+'</span></p>';
-        var yelpURLHTML = '<a target="_blank" id="yelp-url" href="'+response.businesses[0].url+'">yelp:</a>';
-        var yelpRatingHTML = '<span id="rating">'+response.businesses[0].rating +"/5 "+'</span>';
-        var ratingImgHTML = '<img id="rating-img" src ="'+response.businesses[0].rating_img_url+'">';
-        var reviewNumberHTML = '<span id="reviews">'+response.businesses[0].review_count+" reviews"+'</span>';
-        var phoneHTML = '<p>Phone: '+response.businesses[0].display_phone+'</p>';
+        var storeAddressHTML = '<p>Address: <span>'+address+'</span></p>';
+        var yelpURLHTML = '<a target="_blank" id="yelp-url" href="'+url+'">yelp:</a>';
+        var yelpRatingHTML = '<span id="rating">'+rating +"/5 "+'</span>';
+        var ratingImgHTML = '<img id="rating-img" src ="'+rating_img+'">';
+        var reviewNumberHTML = '<span id="reviews">'+total+" reviews"+'</span>';
+        var phoneHTML = '<p>Phone: '+phone+'</p>';
         storeDetail = storeNameHTML + storeAddressHTML + '<p>'+yelpURLHTML+yelpRatingHTML+ratingImgHTML+reviewNumberHTML+phoneHTML+'</p>';
         updateView(store, storeDetail);
       })
@@ -208,6 +217,11 @@ function initMap() {
     // subscribe to updates on query and call a search function
     self.query.subscribe(self.search);
     map.fitBounds(bounds);
+  });
+
+  //To make map display responsive. Thanks to the Code viewer's suggestion
+  google.maps.event.addDomListener(window, 'resize', function() {
+    map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
   });
 };
 

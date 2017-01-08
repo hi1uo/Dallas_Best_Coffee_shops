@@ -5,7 +5,42 @@ In this project, I developed a single page application featuring a map of 12 hig
 
 Technology Used: HTML, CSS, bootstrap, JavaScript, jQuery, Ajax, knockoutJS, Google Maps API, Yelp API, and Gulp.
 
-Run the App from here: https://jerryluo1989.github.io/Neighborhood-Map/dist/index.html
+#### How to Open the App:
+1. Open online via github page: https://jerryluo1989.github.io/Neighborhood-Map/dist/index.html
+2. Host the app locally on localhost:
+  * Download/Clone the code from [here](https://github.com/jerryluo1989/Neighborhood-Map)
+  * Run a local server as following:  
+    ```bash
+    $> cd /path/to/your-project-folder
+    $> python -m SimpleHTTPServer 8080
+    ```
+  * Open a browser and visit localhost:8080
+3. Simple open the index.html file
+    ```bash
+    $> cd /path/to/your-project-folder/src
+    ```
+
+#### Gulp Setup
+Gulp is configured to resize img, minify js/css/html/img, and cleaning up the existing. For more detail, please Refer to gulpfile.js file and [Gulp tutorial for beginner](https://css-tricks.com/gulp-for-beginners/)
+
+1. Required dependencies or packages
+  - htmlmin:  npm i gulp-htmlmin --save-dev
+  - cssnano:  npm i cssnano --save-dev
+  - uglify:   npm i uglify --save-dev
+  - cache: npm i cache --save-dev
+  - del: npm i del --save-dev
+  - run-sequence: npm i run-sequence --save-dev
+
+2. As run-sequence has been setup, By using one command 'gulp', all the previous optimized file will be cleared out, and html,css,js will be minified and saved under dist folder.
+```bash
+gulp.task('default', function(){
+  runSequence(['clean:dist', 'htmlmin', 'cssmin', 'js']);
+});
+```
+3. Run gulp to optimize the files as above:
+```bash
+$> gulp
+```
 
 #### Desktop User
 - Design:
